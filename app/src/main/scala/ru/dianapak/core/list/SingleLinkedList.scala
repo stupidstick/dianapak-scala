@@ -1,6 +1,5 @@
 package ru.dianapak.core.list
 
-import java.util
 import java.util.function.Consumer
 
 

@@ -107,12 +107,12 @@ class SingleLinkedListImpl[T <: Comparable[T]] extends SingleLinkedList[T] with 
     if (pos < 0 || pos >= size) throw new IndexOutOfBoundsException("Position " + pos + " is out of bounds (0, " + (size - 1) + ")")
   }
 
-  private def merge(left: List[T], right: List[T])(implicit ord: Ordering[T]): List[T] = {
+  private def merge(left: List[T], right: List[T]): List[T] = {
     (left, right) match {
       case (Nil, _) => right
       case (_, Nil) => left
       case (x :: xs, y :: ys) =>
-        if (ord.lt(x, y)) x :: merge(xs, right)
+        if (x.compareTo(y) <= 0) x :: merge(xs, right)
         else y :: merge(left, ys)
     }
   }

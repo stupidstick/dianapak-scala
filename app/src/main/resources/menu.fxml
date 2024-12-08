@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane prefHeight="200.0" prefWidth="198.0" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="ru.dianapak.view.MenuController">
+    <VBox spacing="10">
+        <Button mnemonicParsing="false" onAction="#openListStringMenu" text="String menu"/>
+        <Button mnemonicParsing="false" onAction="#openListIntegerMenu" text="Integer menu"/>
+        <Button mnemonicParsing="false" onAction="#openListDoubleMenu" text="Double menu"/>
+        <Button mnemonicParsing="false" onAction="#openListPointMenu" text="Point menu"/>
+    </VBox>
+</AnchorPane>

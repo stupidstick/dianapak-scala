@@ -65,7 +65,7 @@ abstract class ListController[T <: Comparable[T]] extends Initializable {
 
   @FXML
   private def sort(): Unit = {
-    list.quickSort()
+    list.singleMergeSort()
     updateListView()
   }
 

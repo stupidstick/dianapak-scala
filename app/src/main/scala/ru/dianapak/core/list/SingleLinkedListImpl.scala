@@ -62,29 +62,13 @@ class SingleLinkedListImpl[T <: Comparable[T]] extends SingleLinkedList[T] with 
     }
   }
 
-  private def quickSort(arr: Array[T], low: Int, high: Int): Unit = {
-    if (low < high) {
-      val pivotIndex = partition(arr, low, high)
-      quickSort(arr, low, pivotIndex - 1)
-      quickSort(arr, pivotIndex + 1, high)
+  override def singleMergeSort(): Unit = {
+    val sortedList = singleMergeSort(toArray.toList)
+    var current = head
+    for (value <- sortedList) {
+      current.value = value
+      current = current.next
     }
-  }
-
-  private def partition(arr: Array[T], low: Int, high: Int) = {
-    val pivot = arr(high)
-    var i = low - 1
-    for (j <- low until high) {
-      if (arr(j).compareTo(pivot) <= 0) {
-        i += 1
-        val temp = arr(i)
-        arr(i) = arr(j)
-        arr(j) = temp
-      }
-    }
-    val temp = arr(i + 1)
-    arr(i + 1) = arr(high)
-    arr(high) = temp
-    i + 1
   }
 
   override def getSize: Int = size
@@ -121,6 +105,49 @@ class SingleLinkedListImpl[T <: Comparable[T]] extends SingleLinkedList[T] with 
   private def checkPos(pos: Int): Unit = {
     if (size == 0) throw new IndexOutOfBoundsException("List is empty")
     if (pos < 0 || pos >= size) throw new IndexOutOfBoundsException("Position " + pos + " is out of bounds (0, " + (size - 1) + ")")
+  }
+
+  private def merge(left: List[T], right: List[T])(implicit ord: Ordering[T]): List[T] = {
+    (left, right) match {
+      case (Nil, _) => right
+      case (_, Nil) => left
+      case (x :: xs, y :: ys) =>
+        if (ord.lt(x, y)) x :: merge(xs, right)
+        else y :: merge(left, ys)
+    }
+  }
+
+  private def singleMergeSort(list: List[T]): List[T] = {
+    if (list.length <= 1) list
+    else {
+      val (left, right) = list.splitAt(list.length / 2)
+      merge(singleMergeSort(left), singleMergeSort(right))
+    }
+  }
+
+  private def quickSort(arr: Array[T], low: Int, high: Int): Unit = {
+    if (low < high) {
+      val pivotIndex = partition(arr, low, high)
+      quickSort(arr, low, pivotIndex - 1)
+      quickSort(arr, pivotIndex + 1, high)
+    }
+  }
+
+  private def partition(arr: Array[T], low: Int, high: Int) = {
+    val pivot = arr(high)
+    var i = low - 1
+    for (j <- low until high) {
+      if (arr(j).compareTo(pivot) <= 0) {
+        i += 1
+        val temp = arr(i)
+        arr(i) = arr(j)
+        arr(j) = temp
+      }
+    }
+    val temp = arr(i + 1)
+    arr(i + 1) = arr(high)
+    arr(high) = temp
+    i + 1
   }
 
   private class Node[E] extends Serializable {

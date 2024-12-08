@@ -18,6 +18,8 @@ trait SingleLinkedList[T <: Comparable[T]] {
 
   def quickSort(): Unit
 
+  def singleMergeSort(): Unit
+
   def getSize: Int
 
   def toArray: Array[T]
